@@ -1,0 +1,21 @@
+module.exports = ({
+    id,
+    id_str,
+    screen_name,
+    description,
+    protected,
+    followers_count,
+    friends_count,
+    created_at,
+    favourites_count,
+}) => ({
+    id,
+    id_str,
+    screen_name,
+    description,
+    protected,
+    followers_count,
+    friends_count,
+    created_at,
+    favourites_count,
+});

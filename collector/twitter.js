@@ -1,22 +1,23 @@
-const client = require('./client');
-// const Appa = require('appa');
+const twitter = require('./client');
+const Tweet = require('./schema/tweet');
+const User = require('./schema/user');
 
-// class TwitterAppa extends Appa {
-//     constructor() {
-//         this.entities = {
-//             'Tweet': TweetSchema,
-//             'User': UserSchema,
-//         }
-//     }
-// }
+const WORDS = [
+    'triste',
+    'bad',
+    'sad'
+]
 
-client.getTweets({
-    'track': 'triste',
-    'language': 'pt'
-}, event => {
-    console.log(event);
-});
 
-setTimeout(() => {
-    process.exit(0);
-}, 2000);
+twitter
+    .getTweets(WORDS.reduce((a, c) => `${a} OR ${c}`))
+    .map(tweet => {
+        console.log(Tweet(tweet));
+        return twitter.getUser(tweet.user.id, tweet.user.screen_name)
+    })
+    .map(user => {
+        console.log(User(user));
+    })
+    .catch(e => {
+        console.log(e);
+    })

@@ -25,7 +25,9 @@
   },
   "homepage": "https://github.com/getdumont/14bis#readme",
   "dependencies": {
+    "bluebird": "^3.5.1",
     "node-env-file": "^0.1.8",
+    "request": "^2.85.0",
     "twitter": "^1.7.1"
   }
 }
