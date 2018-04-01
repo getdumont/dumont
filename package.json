@@ -1,0 +1,31 @@
+{
+  "name": "14bis",
+  "version": "1.0.0",
+  "description": "Machine to make all KDD of dumont",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/getdumont/14bis.git"
+  },
+  "keywords": [
+    "node",
+    "python",
+    "rust",
+    "appa",
+    "kdd",
+    "twitter"
+  ],
+  "author": "Guilherme Diego <guilherme.albino.francisco@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/getdumont/14bis/issues"
+  },
+  "homepage": "https://github.com/getdumont/14bis#readme",
+  "dependencies": {
+    "node-env-file": "^0.1.8",
+    "twitter": "^1.7.1"
+  }
+}
