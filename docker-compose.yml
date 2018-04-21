@@ -1,0 +1,5 @@
+version: '3'
+services:
+  minner:
+    build: .
+    volumes: ./storage:/dumont/storage

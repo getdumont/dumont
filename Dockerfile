@@ -1,7 +1,7 @@
 FROM alpine:latest
 
-ADD . /14bis
-WORKDIR /14bis
+ADD . /dumont
+WORKDIR /dumont
 
 RUN apk add --no-cache python3 \
     && python3 -m ensurepip \
@@ -11,7 +11,9 @@ RUN apk add --no-cache python3 \
     && if [[ ! -e /usr/bin/python ]]; then ln -sf /usr/bin/python3 /usr/bin/python; fi \
     && rm -r /root/.cache \
     && apk add nodejs=8.11.1 \
-    && cd /14bis \
-    && npm install \
-    && pip install -r requirements.txt
+    && cd /dumont \
+    && curl https://github.com/getappa/appa/releases/download/v0.0.2-razor/appa \
+    && npm install
 
+
+CMD ["./appa", "appa.config.yml"]

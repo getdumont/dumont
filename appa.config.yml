@@ -1,0 +1,24 @@
+storage_uri: 'storage'
+
+tasks:
+  - name: 'twitter'
+    command: 'node'
+    path: 'collector/twitter.js'
+  - name: 'normalize'
+    command: 'python'
+    path: 'tasks/normalize.py'
+  - name: 'sentiment'
+    command: 'python'
+    path: 'tasks/sentiment.py'
+
+processors:
+  - name: 'users'
+    id_prop: 'id'
+    collector_tasks:
+      twitter: tweet
+    sync_tasks:
+      normalized_text: normalize
+    async_tasks:
+      sentiment: sentiment
+
+
