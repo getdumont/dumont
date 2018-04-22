@@ -1,3 +1,5 @@
+const { normalizeTxt } = require('../utils');
+
 module.exports = ({
     id,
     id_str,
@@ -9,7 +11,7 @@ module.exports = ({
     id,
     id_str,
     created_at,
-    text: text.replace(/\n|\r/g, ""),
     entities,
     user_id: user.id,
+    text: normalizeTxt(text),
 });

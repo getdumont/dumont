@@ -1,0 +1,1 @@
+exports.normalizeTxt = (string = '') => string.replace(/\n|\r/g, '')

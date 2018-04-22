@@ -24,7 +24,5 @@ processors:
     id_prop: 'id'
     collector_tasks:
       twitter: user
-    sync_tasks:
-      normalize: normalized_text
-    async_tasks:
-      sentiment: sentiment
+    sync_tasks: {}
+    async_tasks: {}

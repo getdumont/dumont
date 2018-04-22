@@ -1,4 +1,5 @@
 const Twit = require('twit');
+const Promise = require('bluebird');
 const env = require('node-env-file');
 
 env(`${__dirname}/.env`);
@@ -13,17 +14,20 @@ const client = new Twit({
 const BRAZIL_LOCATION = '-73.9872354804, -33.7683777809, -34.7299934555, 5.24448639569';
 const BRAZIL_LANG = 'pt';
 
+const getFromAPI = (path, params) => new Promise((resolve, reject) => {
+    client.get(path, params, (err, val) => {
+        if (err) return reject(err);
+        return resolve(val);
+    });
+});
+
 module.exports = {
     _client: client,
     tweets: {
-        stream: (track, cb) => {
-            const stream = client.stream('statuses/filter', {
-                track, location: BRAZIL_LOCATION, language: BRAZIL_LANG
-            });
-
-            stream.on('tweet', cb);
-        },
-        byUser: (user, cb) => client.get('statuses/user_timeline', user, cb),
+        stream: (track) => client.stream('statuses/filter', {
+            track, location: BRAZIL_LOCATION, language: BRAZIL_LANG
+        }),
+        byUser: (user) => getFromAPI('statuses/user_timeline', user),
     },
-    getUser: (user, cb) => client.get('users/show', user, cb),
+    getUser: (user) => getFromAPI('users/show', user),
 }

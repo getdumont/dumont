@@ -1,5 +1,6 @@
 /storage
 /node_modules
 /storage
+appa
 .env
 package-lock.json
