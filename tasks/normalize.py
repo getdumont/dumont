@@ -1,3 +1,4 @@
+#coding=utf-8
 import sys
 import json
 
@@ -6,4 +7,4 @@ import json
 # https://cloud.google.com/natural-language/docs/analyzing-sentiment?hl=pt-br
 
 data = json.loads(sys.argv[1])
-return data["text"]
+sys.stdout.write(data["text"].encode('utf8'))

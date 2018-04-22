@@ -1,6 +1,9 @@
 
 const twitter = require('./client');
-const collector = require('./data');
+const collector = require('appajs').Collector('./appa.config.yml');
+
+// collector.users.addSchema(require('./schema/user'));
+collector.tweets.addSchema(require('./schema/tweet'));
 
 const WORDS = [
     'triste',

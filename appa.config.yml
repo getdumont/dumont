@@ -12,13 +12,11 @@ tasks:
     path: 'tasks/sentiment.py'
 
 processors:
-  - name: 'users'
+  - name: 'tweets'
     id_prop: 'id'
     collector_tasks:
       twitter: tweet
     sync_tasks:
-      normalized_text: normalize
+      normalize: normalized_text
     async_tasks:
       sentiment: sentiment
-
-

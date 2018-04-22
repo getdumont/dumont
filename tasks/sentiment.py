@@ -1,4 +1,4 @@
-# import sys
-# import json
+#coding=utf-8
+import sys
 
-return 0
+sys.stdout.write("0")
