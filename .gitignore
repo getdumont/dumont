@@ -2,5 +2,6 @@
 /node_modules
 /storage
 appa
-.env
+**/.env
+**/google_credentials.json
 package-lock.json
