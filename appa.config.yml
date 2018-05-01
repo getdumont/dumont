@@ -1,12 +1,20 @@
 storage_uri: 'storage'
 
 tasks:
+  # Collector
   - name: 'twitter'
     command: 'node'
     path: 'collector/twitter.js'
-  - name: 'normalize'
+
+  # Text Analyzing
+  - name: 'spacy.stopwords'
     command: 'python'
-    path: 'tasks/normalize.py'
+    path: 'tasks/spacy_tasks/normalize.py'
+  - name: 'spacy.tree'
+    command: 'python'
+    path: 'tasks/spacy_tasks/tree.py'
+
+  # Sentiment Task
   - name: 'sentiment'
     command: 'python'
     path: 'tasks/sentiment.py'
@@ -17,8 +25,9 @@ processors:
     collector_tasks:
       twitter: tweet
     sync_tasks:
-      normalize: normalized_text
+      normalized_text: spacy.stopwords
     async_tasks:
+      lexical_tree: spacy.tree
       sentiment: sentiment
   - name: 'users'
     id_prop: 'id'
