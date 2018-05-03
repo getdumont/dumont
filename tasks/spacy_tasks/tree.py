@@ -5,6 +5,12 @@ import sys
 
 npl = spacy.load('pt_core_news_sm')
 
+def TaskRunner(callback):
+    data = json.loads(sys.argv[1])
+    resp = callback(data)
+    sys.stdout.write(resp)
+    sys.stdout.flush()
+
 def create_obj(token):
     return {
         'value': token.text,
@@ -17,17 +23,12 @@ def create_obj(token):
     }
 
 def create_tree(tokens):
-    return [create_obj(token) for token in tokens ]
-
-def TaskRunner(callback):
-    data = json.loads(sys.argv[1])
-    resp = callback(data)
-    sys.stdout.write(resp)
-    sys.stdout.flush()
+    return [ create_obj(token) for token in tokens ]
 
 def task(data):
-    tokens = npl(data['text'])
-    tree = create_tree(tokens)
-    return json.dumps(tree)
+    return json.dumps({
+        'normalized': create_tree(npl(data['normalized_text'])),
+        'raw': create_tree(npl(data['text']))
+    })
 
 TaskRunner(task)

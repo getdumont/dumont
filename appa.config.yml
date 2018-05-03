@@ -15,9 +15,9 @@ tasks:
     path: 'tasks/spacy_tasks/tree.py'
 
   # Sentiment Task
-  - name: 'sentiment'
-    command: 'python'
-    path: 'tasks/sentiment.py'
+  - name: 'google.sentiment'
+    command: 'node'
+    path: 'tasks/google/sentiment.js'
 
 processors:
   - name: 'tweets'
@@ -27,8 +27,8 @@ processors:
     sync_tasks:
       normalized_text: spacy.stopwords
     async_tasks:
-      lexical_tree: spacy.tree
-      sentiment: sentiment
+      trees: spacy.tree
+      sentiment: google.sentiment
   - name: 'users'
     id_prop: 'id'
     collector_tasks:
