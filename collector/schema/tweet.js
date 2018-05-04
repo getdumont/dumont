@@ -1,3 +1,4 @@
+const emojinator = require('emojinator')
 const { normalizeTxt } = require('../utils');
 
 module.exports = ({
@@ -13,5 +14,5 @@ module.exports = ({
     created_at,
     entities,
     user_id: user.id,
-    text: normalizeTxt(text),
+    ...emojinator.fullObject(normalizeTxt(text)),
 });
