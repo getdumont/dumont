@@ -7,15 +7,15 @@ tasks:
     path: 'collector/twitter.js'
 
   # Text Analyzing
-  - name: 'spacy.stopwords'
+  - name: 'stopwords'
     command: 'python'
     path: 'tasks/spacy_tasks/normalize.py'
-  - name: 'spacy.tree'
+  - name: 'tree'
     command: 'python'
     path: 'tasks/spacy_tasks/tree.py'
 
   # Sentiment Task
-  - name: 'google.sentiment'
+  - name: 'sentiment'
     command: 'node'
     path: 'tasks/google/sentiment.js'
 
@@ -25,10 +25,10 @@ processors:
     collector_tasks:
       twitter: tweet
     sync_tasks:
-      normalized_text: spacy.stopwords
+      stopwords: normalizedText
     async_tasks:
-      trees: spacy.tree
-      sentiment: google.sentiment
+      tree: syntaticTree
+      sentiment: sentiment
   - name: 'users'
     id_prop: 'id'
     collector_tasks:

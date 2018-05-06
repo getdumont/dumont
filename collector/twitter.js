@@ -8,8 +8,10 @@ collector.tweets.addSchema(require('./schema/tweet'));
 const LIMIT = 1;
 const WORDS = [
     'triste',
-    'bad',
-    'sad'
+    'chateado',
+    'mal',
+    'infelizmente',
+    'merda',
 ];
 
 let tasks = [];

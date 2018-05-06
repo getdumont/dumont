@@ -27,8 +27,8 @@ def create_tree(tokens):
 
 def task(data):
     return json.dumps({
-        'normalized': create_tree(npl(data['normalized_text'])),
-        'raw': create_tree(npl(data['text']))
+        'normalized': create_tree(npl(data['normalizedText'])),
+        'raw': create_tree(npl(data['clearText']))
     })
 
 TaskRunner(task)

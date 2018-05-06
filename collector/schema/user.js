@@ -1,4 +1,5 @@
 const { normalizeTxt } = require('../utils');
+const emojinator = require('emojinator')
 
 module.exports = ({
     id,
@@ -24,7 +25,7 @@ module.exports = ({
     friends_count,
     created_at,
     favourites_count,
-    description: normalizeTxt(description),
+    description: emojinator.fullObject(normalizeTxt(description)),
     colors: {
         text: profile_text_color,
         link: profile_link_color,

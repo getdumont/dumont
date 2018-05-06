@@ -16,7 +16,7 @@ def TaskRunner(callback):
     sys.stdout.flush()
 
 def task(data):
-    tokens = npl(data['text'])
+    tokens = npl(data['clearText'])
     return remove_stopwords(tokens)
 
 TaskRunner(task)

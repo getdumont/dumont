@@ -21,8 +21,8 @@ const getSentiment = (text) => {
 }
 
 Task((data) => {
-    const text = data['text'];
-    const normalizedText = data['normalized_text'];
+    const text = data['clearText'];
+    const normalizedText = data['normalizedText'];
 
     return getSentiment(text).then((sentiment) => {
         return getSentiment(normalizedText).then((nsentiment) => ({
