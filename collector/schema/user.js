@@ -1,37 +1,53 @@
-const { normalizeTxt } = require('../utils');
+const mongoose = require('mongoose');
 const emojinator = require('emojinator')
+const Schema = mongoose.Schema;
 
-module.exports = ({
-    id,
-    id_str,
-    screen_name,
-    description,
-    protected,
-    followers_count,
-    friends_count,
-    created_at,
-    favourites_count,
+const baseString = {
+    type: String,
+    required: true,
+};
 
-    profile_link_color,
-    profile_sidebar_border_color,
-    profile_sidebar_fill_color,
-    profile_text_color,
-}) => ({
-    id,
-    id_str,
-    screen_name,
-    protected,
-    followers_count,
-    friends_count,
-    created_at,
-    favourites_count,
-    description: emojinator.fullObject(normalizeTxt(description)),
-    colors: {
-        text: profile_text_color,
-        link: profile_link_color,
-        sidebar: {
-            border: profile_sidebar_border_color,
-            fill: profile_sidebar_fill_color
-        }
-    }
+const baseNumber = {
+    type: Number,
+    default: 0,
+};
+const UserSchema = new Schema({
+    id: {
+        type: String,
+        unique: true,
+        index: true
+    },
+    id_str: {
+        type: String,
+        unique: true,
+        index: true
+    },
+    protected: {
+        type: Boolean,
+        default: false
+    },
+    created_at: {
+        type: Date,
+        required: true,
+    },
+    descriptionObject: {
+        type: Object,
+        default: {},
+    },
+    screen_name: baseString,
+    followers_count: baseNumber,
+    friends_count: baseNumber,
+    favourites_count: baseNumber,
+    description: baseString,
+    profile_text_color: baseString,
+    profile_link_color: baseString,
+    profile_sidebar_border_color: baseString,
+    profile_sidebar_fill_color: baseString
 });
+
+UserSchema.pre('save', function (next) {
+    this.descriptionObject = emojinator.fullObject(this.description);
+    next();
+});
+
+module.exports = mongoose.model('user', UserSchema);

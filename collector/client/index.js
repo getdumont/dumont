@@ -1,8 +1,5 @@
 const Twit = require('twit');
 const Promise = require('bluebird');
-const env = require('node-env-file');
-
-env(`${__dirname}/.env`);
 
 const client = new Twit({
     consumer_key: process.env.TWITTER_CONSUMER_KEY,
