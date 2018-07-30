@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
-const dbURI = process.env.DEVELOPMENT ?
-  'mongodb://127.0.0.1:27017/dumont' :
-  `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_URL}?retryWrites=true`;
+
+const dbURI = process.env.FULL_DB_URI;
 
 mongoose.Promise = Promise;
 mongoose.connect(dbURI, { useNewUrlParser: true });
