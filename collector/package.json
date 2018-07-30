@@ -1,7 +1,7 @@
 {
-  "name": "dumont",
+  "name": "dumont-collector",
   "version": "1.0.0",
-  "description": "Machine to make all KDD of dumont",
+  "description": "Project to Collect twitter data",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/getdumont/14bis#readme",
   "dependencies": {
+    "aws-sdk": "^2.282.1",
     "bluebird": "^3.5.1",
     "emojinator": "^1.0.0",
     "mongoose": "^5.2.5",

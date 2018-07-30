@@ -1,5 +1,5 @@
 if (process.env.DEVELOPMENT) {
-    require('node-env-file')(`${__dirname}/.env`);
+    require('node-env-file')(`.env`);
     process.env.FULL_DB_URI = 'mongodb://127.0.0.1:27017/dumont';
 
     if (process.env.DEVELOPMENT != 'true') {

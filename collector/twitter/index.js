@@ -34,7 +34,7 @@ const processData = ({ tweetsPromise, userPromise }) => {
                 totalTweets = totalTweets + 1;
                 const tweet = new Tweet(tweetData);
                 return tweet.save();
-            });
+            }, { concurrency: 10 });
         });
     })
 };

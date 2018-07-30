@@ -1,11 +1,9 @@
 const mongoose = require('mongoose');
 const emojinator = require('emojinator')
 const Schema = mongoose.Schema;
+const { sendTweetToSQS } = require('../aws');
 
-const baseString = {
-    type: String,
-    required: true
-};
+const sendMessage = sendTweetToSQS('tweet');
 
 const TweetSchema = new Schema({
     id: {
@@ -45,6 +43,12 @@ const TweetSchema = new Schema({
 TweetSchema.pre('save', function (next) {
     this.textObject = emojinator.fullObject(this.text);
     next();
+});
+
+TweetSchema.post('save', function (doc, next) {
+    sendMessage(doc._id)
+        .then(() => next())
+        .catch(next);
 });
 
 module.exports = mongoose.model('tweet', TweetSchema);
