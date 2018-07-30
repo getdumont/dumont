@@ -1,5 +1,5 @@
 /storage
-/node_modules
+**/node_modules
 /storage
 appa
 **/.env
