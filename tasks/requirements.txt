@@ -1,2 +1,4 @@
 boto3
 pymongo
+google-cloud-language
+six
