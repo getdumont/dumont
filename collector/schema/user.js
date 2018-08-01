@@ -3,7 +3,7 @@ const emojinator = require('emojinator')
 const Schema = mongoose.Schema;
 const { sendTweetToSQS } = require('../aws');
 
-const sendMessage = sendTweetToSQS('user');
+const sendMessage = sendTweetToSQS('users');
 const baseString = {
     type: String,
     required: true,
@@ -22,7 +22,6 @@ const UserSchema = new Schema({
     id_str: {
         type: String,
         unique: true,
-        index: true
     },
     protected: {
         type: Boolean,
@@ -32,9 +31,13 @@ const UserSchema = new Schema({
         type: Date,
         required: true,
     },
-    descriptionObject: {
+    description_object: {
         type: Object,
         default: {},
+    },
+    processing_version: {
+        ...baseNumber,
+        index: true,
     },
     screen_name: baseString,
     followers_count: baseNumber,
@@ -48,7 +51,7 @@ const UserSchema = new Schema({
 });
 
 UserSchema.pre('save', function (next) {
-    this.descriptionObject = emojinator.fullObject(this.description);
+    this.description_object = emojinator.fullObject(this.description);
     next();
 });
 

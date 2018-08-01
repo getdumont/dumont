@@ -3,7 +3,7 @@ const emojinator = require('emojinator')
 const Schema = mongoose.Schema;
 const { sendTweetToSQS } = require('../aws');
 
-const sendMessage = sendTweetToSQS('tweet');
+const sendMessage = sendTweetToSQS('tweets');
 
 const TweetSchema = new Schema({
     id: {
@@ -14,7 +14,6 @@ const TweetSchema = new Schema({
     id_str: {
         type: String,
         unique: true,
-        index: true
     },
     created_at: {
         type: Date,
@@ -24,13 +23,18 @@ const TweetSchema = new Schema({
         type: String,
         required: true
     },
-    textObject: {
+    text_object: {
         type: Object,
         default: {}
     },
     entities: {
         type: Object,
         default: {}
+    },
+    processing_version: {
+        type: Number,
+        default: 0,
+        index: true
     },
     _user: {
         type: mongoose.SchemaTypes.ObjectId,
@@ -41,7 +45,7 @@ const TweetSchema = new Schema({
 });
 
 TweetSchema.pre('save', function (next) {
-    this.textObject = emojinator.fullObject(this.text);
+    this.text_object = emojinator.fullObject(this.text);
     next();
 });
 
