@@ -1,17 +1,27 @@
 import boto3
 import spacy
 
+from os import getenv
+from time import sleep
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 from google.cloud import language
 from google.cloud.language import enums
 from google.cloud.language import types
 
-Client = MongoClient('localhost', 27017)
-db = Client['dumont']
+# Create Mongo Client
+Client = MongoClient(getenv('MONGO_URI'), 27017)
+db = Client[getenv('MONGO_DB')]
+
+# Create SQS
 sqs = boto3.resource('sqs')
-queue = sqs.create_queue(QueueName='dumont-process')
+queue = sqs.create_queue(QueueName=getenv('AWS_SQS_QUEUE_NAME'))
+
+# Load NPL
 npl = spacy.load('pt_core_news_sm')
+
+# Constant: 60 Seconds per 60 Minutes = 1 Hour
+HOUR = 60 * 60
 
 def sentiment_text(text):
     lang = language.LanguageServiceClient()
@@ -46,16 +56,17 @@ def create_tree(tokens):
     return [ create_obj(token) for token in tokens ]
 
 def user_mod(doc):
-    tokens = npl(doc['descriptionObject']['clearText'])
+    tokens = npl(doc['description_object']['clearText'])
 
     return {
         '$set': {
-            'cleanDescription': ' '.join(remove_stopwords(tokens))
+            'clean_description': ' '.join([t.text for t in remove_stopwords(tokens)]),
+            'processing_version': 1
         }
     }
 
 def tweet_mod(doc):
-    rawText = doc['textObject']['clearText']
+    rawText = doc['text_object']['clearText']
     tokens = npl(rawText)
 
     cleanTokens = remove_stopwords(tokens)
@@ -63,11 +74,12 @@ def tweet_mod(doc):
 
     return {
         '$set': {
-            'cleanText': cleanText,
-            'cleanTree': create_tree(cleanTokens),
-            'rawTree': create_tree(tokens),
-            'cleanSentiment': sentiment_text(cleanText),
-            'rawSentiment': sentiment_text(rawText)
+            'clean_text': cleanText,
+            'clean_tree': create_tree(cleanTokens),
+            'raw_tree': create_tree(tokens),
+            'clean_sentiment': sentiment_text(cleanText),
+            'raw_sentiment': sentiment_text(rawText),
+            'processing_version': 1
         }
     }
 
@@ -80,16 +92,29 @@ mod = {
 def update_doc(doc_id, kind):
     query = { '_id': ObjectId(doc_id) }
     doc = db[kind].find_one(query)
-    db[kind].update_one(query, mod[kind](doc))
+
+    if doc['processing_version'] is 0:
+        db[kind].update_one(query, mod[kind](doc))
 
 
-for message in queue.receive_messages(
-    MessageAttributeNames=['Kind'],
-    MaxNumberOfMessages=10,
-    WaitTimeSeconds=10
-):
-    kind = message.message_attributes.get('Kind').get('StringValue')
-    doc_id = message.body
+while 1:
+    print('Restart Loop')
+    messages = queue.receive_messages(
+        MessageAttributeNames=['Kind'],
+        MaxNumberOfMessages=10,
+        WaitTimeSeconds=10
+    )
 
-    update_doc(doc_id, kind)
-    message.delete()
+    if len(messages) <= 0:
+        print('Queue stopped per 1 hour')
+        sleep(HOUR)
+        continue
+
+    for message in messages:
+        kind = message.message_attributes.get('Kind').get('StringValue')
+        doc_id = message.body
+        print('Processing: <{}> {}'.format(kind, doc_id))
+
+        update_doc(doc_id, kind)
+
+        message.delete()

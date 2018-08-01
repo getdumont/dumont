@@ -3,5 +3,6 @@
 /storage
 appa
 **/.env
+**/.env_prod
 **/google_credentials.json
 package-lock.json
