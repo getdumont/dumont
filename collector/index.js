@@ -1,12 +1,3 @@
-if (process.env.DEVELOPMENT == 'true') {
-    require('node-env-file')(`.env`);
-    process.env.FULL_DB_URI = `mongodb://${process.env.MONGO_URI}:27017/${process.env.MONGO_DB}`;
-} else {
-    require('node-env-file')(`.env-prod`);
-    process.env.FULL_DB_URI =
-            `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_URI}/${process.env.MONGO_DB}`
-}
-
 const http = require('http');
 const twitterCollector = require('./twitter');
 
@@ -26,4 +17,9 @@ http.createServer(function (req, res) {
         res.write(JSON.stringify({ error }, null, 4));
         return res.end();
     });
-}).listen(process.env.COLLECTOR_API_PORT);
+}).listen({
+    port: 8080,
+    host: '0.0.0.0'
+}, () => {
+    console.log('Server up on http://0.0.0.0:8080/')
+});

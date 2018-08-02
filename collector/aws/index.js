@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-AWS.config.update({ region: process.env.AWS_SQS_REGION });
+AWS.config.update({ region: process.env.AWS_DEFAULT_REGION });
 
 const QueueUrl = process.env.AWS_SQS_URL;
 const sqs = new AWS.SQS({

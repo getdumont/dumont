@@ -1,6 +1,34 @@
 version: '3'
 services:
-  minner:
-    build: .
+  collector:
+    build: ./collector
+    env_file: ./dev.env
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    ports:
+      - 8080:8080
+  # tasks:
+  #   build: ./tasks
+  #   links:
+  #     - mongo
+  #   env_file:
+  #     - ./dev.env
+  #   environment:
+  #     - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS}
+  #     - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+  #     - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+  #     - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+  #     - AWS_SQS_URL=${AWS_SQS_URL}
+  #     - MONGO_URI=${MONGO_URI}
+  #     - MONGO_PORT=${MONGO_PORT}
+  #     - MONGO_PASS=${MONGO_PASS}
+  #     - MONGO_USER=${MONGO_USER}
+  #     - MONGO_DB=${MONGO_DB}
+  mongo:
+    image: mongo:latest
+    ports:
+      - 27017:27017
     volumes:
-      - ./storage:/dumont/storage
+      - ./data:/data/db

@@ -2,7 +2,7 @@
 **/node_modules
 /storage
 appa
-**/.env
-**/.env_prod
+**/*.env
 **/google_credentials.json
 package-lock.json
+/data
