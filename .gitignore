@@ -1,7 +1,4 @@
-/storage
 **/node_modules
-/storage
-appa
 **/*.env
 **/google_credentials.json
 package-lock.json
