@@ -3,3 +3,4 @@
 **/google_credentials.json
 package-lock.json
 /data
+.vscode
