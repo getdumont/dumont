@@ -9,13 +9,18 @@ from google.cloud import language
 from google.cloud.language import enums
 from google.cloud.language import types
 
+# After the last / we have the Queue Name
+# This split SQS_URL to get the last part
+queueNameList = getenv('AWS_SQS_URL').split('/')
+queueName = queueNameList[-1]
+
 # Create Mongo Client
 Client = MongoClient(getenv('MONGO_URI'), 27017)
 db = Client[getenv('MONGO_DB')]
 
 # Create SQS
 sqs = boto3.resource('sqs')
-queue = sqs.create_queue(QueueName=getenv('AWS_SQS_QUEUE_NAME'))
+queue = sqs.create_queue(QueueName=queueName)
 
 # Load NPL
 npl = spacy.load('pt_core_news_sm')
