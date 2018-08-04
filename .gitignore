@@ -3,4 +3,5 @@
 **/google_credentials.json
 package-lock.json
 /data
+/redis_data
 .vscode

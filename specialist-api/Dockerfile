@@ -1,12 +1,9 @@
-FROM golang:latest
+FROM mhart/alpine-node:latest
 
-ADD . /go/github.com/getdumont/dumont/specialist-api
+ADD . /app
+WORKDIR /app
 
-WORKDIR /go/github.com/getdumont/dumont/specialist-api
+RUN cd /app \
+    && npm install
 
-RUN cd /go/github.com/getdumont/dumont/specialist-api \
-    && go get \
-    && go build
-
-CMD []
-ENTRYPOINT ["/go/bin/specialist-api"]
+CMD ["node", "index.js"]
