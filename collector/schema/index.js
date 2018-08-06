@@ -47,3 +47,4 @@ process.on('SIGINT', function() {
 connectOnDb();
 exports.User = require('./user');
 exports.Tweet = require('./tweet');
+exports.List = require('./list');

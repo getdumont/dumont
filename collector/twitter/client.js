@@ -24,7 +24,7 @@ module.exports = {
         stream: (track) => client.stream('statuses/filter', {
             track, location: BRAZIL_LOCATION, language: BRAZIL_LANG
         }),
-        byUser: (user) => getFromAPI('statuses/user_timeline', user),
+        byUser: (user) => getFromAPI('statuses/user_timeline', {...user, count: 200}),
     },
     getUser: (user) => getFromAPI('users/show', user),
 }

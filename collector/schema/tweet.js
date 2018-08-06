@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const emojinator = require('emojinator')
+const emojinator = require('emojinator');
 const Schema = mongoose.Schema;
 const { sendTweetToSQS } = require('../aws');
 
@@ -46,6 +46,7 @@ const TweetSchema = new Schema({
 
 TweetSchema.pre('save', function (next) {
     this.text_object = emojinator.fullObject(this.text);
+
     next();
 });
 

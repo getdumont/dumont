@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const emojinator = require('emojinator')
+const emojinator = require('emojinator');
 const Schema = mongoose.Schema;
 const { sendTweetToSQS } = require('../aws');
 
@@ -33,17 +33,19 @@ const UserSchema = new Schema({
     },
     description_object: {
         type: Object,
-        default: {},
     },
     processing_version: {
         ...baseNumber,
         index: true,
     },
+    description: {
+        type: String,
+        default: '',
+    },
     screen_name: baseString,
     followers_count: baseNumber,
     friends_count: baseNumber,
     favourites_count: baseNumber,
-    description: baseString,
     profile_text_color: baseString,
     profile_link_color: baseString,
     profile_sidebar_border_color: baseString,
@@ -51,11 +53,18 @@ const UserSchema = new Schema({
 });
 
 UserSchema.pre('save', function (next) {
-    this.description_object = emojinator.fullObject(this.description);
+    if (this.description !== '') {
+        this.description_object = emojinator.fullObject(this.description);
+    }
+
     next();
 });
 
 UserSchema.post('save', function (doc, next) {
+    if (this.description_object) {
+        return next();
+    }
+
     sendMessage(doc._id)
         .then(() => next())
         .catch(next);

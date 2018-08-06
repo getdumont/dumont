@@ -26,6 +26,6 @@ exports.sendTweetToSQS = (kind) => (id) => new Promise((resolve, reject) => {
             return reject(err);
         }
 
-        return resolve(data);
+         return resolve(data);
     });
 });
