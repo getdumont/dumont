@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import store from 'domains/store';
 
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
@@ -18,12 +19,14 @@ const DashboardPage = (props) => (
 )
 
 const App = () => (
-    <BrowserRouter>
-        <Switch>
-            <Route path='/login' component={LoginPage} />
-            <Route path='/' render={DashboardPage} />
-        </Switch>
-    </BrowserRouter>
+    <Provider store={store}>
+        <BrowserRouter>
+            <Switch>
+                <Route path='/login' component={LoginPage} />
+                <Route path='/' render={DashboardPage} />
+            </Switch>
+        </BrowserRouter>
+    </Provider>
 )
 
 ReactDOM.render(<App />, document.getElementById("dumont-specialist"));
