@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
 const App = express();
@@ -9,6 +10,7 @@ const {
     ListController
 } = require('./controller');
 
+App.use(cors());
 App.use(bodyParser.json());
 App.use('/answers', AnswerController);
 App.use('/words', WordController);

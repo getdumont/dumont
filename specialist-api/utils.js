@@ -15,7 +15,7 @@ const generateToken = (specialist) => jwt.sign({
 exports.session = {
     create: (specialist) => {
         const token = generateToken(specialist);
-        client.set(token, specialist._id);
+        client.set(token, specialist._id.toString());
         return Promise.resolve(token);
     },
     verify: (token) => new Promise((resolve, reject) => {
