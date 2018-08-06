@@ -44,9 +44,12 @@ exports.session = {
 }
 
 exports.handleRes = (res, promise) => {
+    console.log('handle res');
     promise.then((body) => {
+        console.log(body);
         res.status(200).json(body);
     }).catch((error) => {
+        console.log(error);
         res.status(500).json({ error })
     });
 }

@@ -24,6 +24,10 @@ const SpecialistSchema = new Schema({
     tweets: [{
         type: mongoose.SchemaTypes.ObjectId,
     }],
+    analyzing: {
+        index: { type: Number },
+        list_id: { type: mongoose.SchemaTypes.ObjectId }
+    },
     is_admin: {
         type: Boolean,
         default: false
