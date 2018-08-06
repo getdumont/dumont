@@ -33,6 +33,7 @@ def sentiment_text(text):
 
     document = types.Document(
         content=text,
+        language='pt',
         type=enums.Document.Type.PLAIN_TEXT
     )
 
@@ -61,11 +62,15 @@ def create_tree(tokens):
     return [ create_obj(token) for token in tokens ]
 
 def user_mod(doc):
+    if 'description_object' not in doc:
+        return { '$set': { 'processing_version': 1 }}
+
     tokens = npl(doc['description_object']['clearText'])
+    tokens_text = [t.text for t in remove_stopwords(tokens)]
 
     return {
         '$set': {
-            'clean_description': ' '.join([t.text for t in remove_stopwords(tokens)]),
+            'clean_description': ' '.join(tokens_text),
             'processing_version': 1
         }
     }
