@@ -1,0 +1,5 @@
+export const TWEET_ON_LIST_STAGES = [
+    'TWEET_ON_LIST_FETCH',
+    'TWEET_ON_LIST_FETCH',
+    'TWEET_ON_LIST_FAIL_FETCH'
+];

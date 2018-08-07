@@ -18,9 +18,9 @@ const ListSchema = new Schema({
 
 ListSchema.statics.getTweet = function ({ index, list_id }) {
     return this.findOne({ _id: list_id }).then((list) => {
-        return mongoose.connection.db.collection('tweets').find({
+        return mongoose.connection.db.collection('tweets').findOne({
             _id: list.tweets[index]
-        }).toArray()
+        })
     });
 }
 

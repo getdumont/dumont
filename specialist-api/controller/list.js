@@ -7,7 +7,7 @@ list.get('/tweet', auth, (req, res) => {
     handleRes(res, tweetPromise);
 });
 
-list.post('/update', auth, (req, res) => {
+list.put('/next-index', auth, (req, res) => {
     const changePromise = List.checkAndUpdate(req.specialist);
     handleRes(res, changePromise);
 });

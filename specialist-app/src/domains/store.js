@@ -2,6 +2,8 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { apiMiddleware, sideEffectMiddleware } from '@monumentuminc/obisidian';
 
 import specialist from 'domains/specialists/reducer';
+import list from 'domains/lists/reducer';
+
 import {
     SPECIALIST_LOGIN,
     SPECIALIST_LOGOUT,
@@ -10,7 +12,7 @@ import {
 } from 'domains/specialists/constants';
 
 const reducers = combineReducers({
-    specialist,
+    specialist, list
 });
 
 const api = apiMiddleware((data) => {

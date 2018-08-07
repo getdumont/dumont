@@ -1,19 +1,30 @@
-import React from 'react';
-import { Grid, Row, Column, Card } from '@opensanca/burro-react';
+import React, { Component } from 'react';
+import store from 'domains/store';
 
-export const TweetAnalyzePage = () => (
-    <Grid>
-        <Row>
-            <Column>
-            </Column>
-        </Row>
-        <Row>
-            <Column>
-            </Column>
-            <Column>
-            </Column>
-        </Row>
-    </Grid>
-);
+import { Grid, Row, Column } from '@opensanca/burro-react';
+import { getTweet } from 'domains/lists/actions';
+import { TweetContainer } from 'containers';
+
+export class TweetAnalyzePage extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentDidMount() {
+        store.dispatch(getTweet());
+    }
+
+    render() {
+        return (
+            <Grid>
+                <Row>
+                    <Column>
+                        <TweetContainer />
+                    </Column>
+                </Row>
+            </Grid>
+        );
+    }
+}
 
 export default TweetAnalyzePage;

@@ -1,6 +1,8 @@
-import Specialist from './specialist';
 import forge, { setContext } from 'mappersmith';
 import EncodeJson from 'mappersmith/middleware/encode-json'
+
+import Specialist from './specialist';
+import List from './list';
 
 const TOKEN_KEY = 'dumont-especialista-token';
 
@@ -26,5 +28,5 @@ export const setToken = (token) => {
 export default forge({
     host: 'http://127.0.0.1:8081/',
     middleware: [ EncodeJson, AuthMiddleware ],
-    resources: { Specialist }
+    resources: { Specialist, List }
 });
