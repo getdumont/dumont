@@ -3,7 +3,7 @@ import { CREATE_SESSION_STAGES, DESTROY_SESSION_STAGES, UPDATE_SESSION_FORM } fr
 
 export const createSession = (payload) => ({
     type: CREATE_SESSION_STAGES,
-    api: api.Specialist.login({ payload }).then(({ token }) => {
+    api: () => api.Specialist.login({ payload }).then(({ token }) => {
         setToken(token);
         return api.Specialist.sessionInfo().then((user) => {
             user.token = token;
@@ -14,7 +14,7 @@ export const createSession = (payload) => ({
 
 export const destroySession = () => ({
     type: DESTROY_SESSION_STAGES,
-    api: api.Specialist.logout()
+    api: api.Specialist.logout
 });
 
 export const updateFormField = (key) => (value) => ({

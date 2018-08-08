@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Card } from '@opensanca/burro-react';
+import { getTweet } from 'domains/lists/actions';
 import { connect } from 'react-redux';
 
 const mapStateToProps = ({ list }) => {
@@ -11,16 +12,30 @@ const mapStateToProps = ({ list }) => {
     }
 };
 
-export const TweetContainerComponent = ({
-    text,
-    created_at
-}) => (
-    <Card>
-        <p> { text } </p>
-        <p> { created_at } </p>
-    </Card>
-);
+const mapDispatchToProps = (dispatch) => ({
+    getTweet: () => dispatch(getTweet())
+})
 
-export const TweetContainer = connect(mapStateToProps)(TweetContainerComponent);
+export class TweetContainerComponent extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    componentWillMount() {
+        if (!this.props.text || this.props.text === '') {
+            this.props.getTweet();
+        }
+    }
+
+    render() {
+        return (
+            <Card block>
+                <p> { this.props.text } </p>
+            </Card>
+        );
+    }
+}
+
+export const TweetContainer = connect(mapStateToProps, mapDispatchToProps)(TweetContainerComponent);
 
 export default TweetContainer;
