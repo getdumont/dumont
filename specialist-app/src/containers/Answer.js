@@ -46,6 +46,11 @@ export const AnswerContainerComponent = ({
     addAnswer,
 }) => (
     <Card block>
+        <h3> Resposta </h3>
+        <p style={{fontSize: '12px'}}>
+            Nessa sessão é possível adicionar respostas baseadas na Escala de Ansiedade, Depressão e Estresse. Basta clicar no botão 'Adicionar Resposta', selecionar a pergunta e a intensidade na qual ela se enquadra.
+        </p>
+        <hr/>
         <Grid>
             {
                 answers.map((answer, index) => (
