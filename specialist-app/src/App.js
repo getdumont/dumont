@@ -7,6 +7,9 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import { TweetAnalyzePage, ProfilePage, HistoryPage, LoginPage } from 'pages';
 import { DashboardContainer } from 'containers';
+import { getQuestions } from 'domains/answers/actions';
+
+store.dispatch(getQuestions());
 
 const DashboardPage = (props) => (
     <DashboardContainer>

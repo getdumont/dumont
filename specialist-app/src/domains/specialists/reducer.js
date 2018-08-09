@@ -17,6 +17,10 @@ const login = (state) => {
 }
 
 const logout = (state) => {
+    if (!(state.get('detail') || {}).token) {
+        window.location.href = '/login';
+    }
+
     return state;
 }
 

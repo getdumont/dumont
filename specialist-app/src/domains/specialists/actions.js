@@ -1,4 +1,4 @@
-import api, { setToken } from 'api';
+import api, { unsetToken, setToken } from 'api';
 import { CREATE_SESSION_STAGES, DESTROY_SESSION_STAGES, UPDATE_SESSION_FORM } from './constants';
 
 export const createSession = (payload) => ({
@@ -14,7 +14,10 @@ export const createSession = (payload) => ({
 
 export const destroySession = () => ({
     type: DESTROY_SESSION_STAGES,
-    api: api.Specialist.logout
+    api: () => api.Specialist.logout().then(() => {
+        unsetToken();
+        return {};
+    })
 });
 
 export const updateFormField = (key) => (value) => ({

@@ -1,14 +1,28 @@
-import api from 'api';
+import api, { getToken } from 'api';
 import {
     ADD_ANSWER,
     REMOVE_ANSWER,
     UPDATE_ANSWER,
+    SET_QUESTIONS,
     QUESTIONS_LIST_STAGES
 } from './constants';
 
+const getQuestionsRequestCached = () => {
+    const storageQuestions = localStorage.getItem('dumont-questions');
+
+    if ((!storageQuestions || storageQuestions == 'undefined') && getToken({})) {
+        return api.Answer.getQuestions().then((questions) => {
+            localStorage.setItem('dumont-questions', JSON.stringify(questions));
+            return questions;
+        });
+    } else {
+        return Promise.resolve(JSON.parse(storageQuestions));
+    }
+}
+
 export const getQuestions = () => ({
     type: QUESTIONS_LIST_STAGES,
-    api: api.Answer.getQuestions,
+    api: getQuestionsRequestCached,
 });
 
 export const addAnswer = () => ({
