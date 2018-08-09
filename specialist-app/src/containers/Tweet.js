@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
-import { Card } from '@opensanca/burro-react';
+import { addWord, removeWord } from 'domains/words/actions';
 import { getTweet } from 'domains/lists/actions';
+import { Card } from '@opensanca/burro-react';
 import { connect } from 'react-redux';
+import { List } from 'immutable';
 
-const mapStateToProps = ({ list }) => {
-    const tweet = list.get('detail') || {};
-
-    return {
-        text: tweet.text,
-        created_at: tweet.created_at
-    }
-};
+const mapStateToProps = ({ list, word }) => ({
+    text: (list.get('detail') || {}).text,
+    words: word.get('list') || new List(),
+});
 
 const mapDispatchToProps = (dispatch) => ({
-    getTweet: () => dispatch(getTweet())
+    getTweet: () => dispatch(getTweet()),
+    addWord: (text) => dispatch(addWord(text)),
+    removeWord: (text) => dispatch(removeWord(text)),
 })
 
 export class TweetContainerComponent extends Component {
@@ -27,10 +27,45 @@ export class TweetContainerComponent extends Component {
         }
     }
 
+    removePoints(text) {
+        return text.replace(/!|\.|\:|,|;/g, '');
+    }
+
+    renderWords() {
+        if (!this.props.text) {
+            return null;
+        }
+
+        return this.props.text.split(" ").map((text, index) => {
+            const word = this.removePoints(text);
+            const itsOnList = this.props.words.contains(word);
+
+            const style = itsOnList ? ({
+                opacity: '0.5',
+                background: '#f1f1f1',
+                marginRight: '6px',
+                cursor: 'pointer'
+            }) : ({
+                marginRight: '6px',
+                cursor: 'pointer'
+            });
+
+            const onClick = itsOnList ?
+                this.props.removeWord : this.props.addWord;
+
+            return (
+                <span key={`word-${index}`} style={style}
+                    onClick={() => onClick(word)}>
+                    {text}
+                </span>
+            );
+        });
+    }
+
     render() {
         return (
             <Card block>
-                <p> { this.props.text } </p>
+                {this.renderWords()}
             </Card>
         );
     }
