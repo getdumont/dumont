@@ -2,7 +2,8 @@ import { mountReducer } from '@monumentuminc/obisidian';
 import { List, Map } from 'immutable';
 import {
     ADD_WORD,
-    REMOVE_WORD
+    REMOVE_WORD,
+    CLEAR_WORD
 } from './constants';
 
 const addWord = (state, { payload }) => {
@@ -17,9 +18,14 @@ const removeWord = (state, { payload }) => {
     });
 }
 
+const clearWord = (state) => {
+    return state.set('list', new List());
+}
+
 export default mountReducer(new Map({
     list: new List()
 }), {
+    [CLEAR_WORD]: clearWord,
     [ADD_WORD]: addWord,
     [REMOVE_WORD]: removeWord,
 })

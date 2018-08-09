@@ -6,9 +6,19 @@ export const getTweet = () => ({
     api: api.List.getTweet
 });
 
-export const finishTweetAnalyze = (to_tweet, question) => ({
+export const finishTweetAnalyze = (to_tweet, question, words) => ({
     type: ANALYZE_SAVE_STAGES,
-    api: () => api.Answer.saveAll({
-        payload: { to_tweet, question }
-    }).then(() => api.List.nextIndex())
-})
+    api: () => {
+        const saveWord = words && words.size > 0 ?
+            api.Word.saveAll({ payload: { to_tweet, words }}) :
+            Promise.resolve();
+
+        const saveQuestion = question && question.size > 0 ?
+            api.Answer.saveAll({ payload: { to_tweet, question }}) :
+            Promise.resolve();
+
+        return Promise.all([ saveWord, saveQuestion ]).then(() => {
+            return api.List.nextIndex();
+        });
+    }
+});

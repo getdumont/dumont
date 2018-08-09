@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Grid, Row, Column } from '@opensanca/burro-react';
-import { TweetContainer, WordContainer, AnswerContainer, SaveAnalyzeButton } from 'containers';
+import { TweetContainer, WordContainer, AnswerContainer, SaveAnalyzeButtons } from 'containers';
 
 export const  TweetAnalyzePage = () => (
     <Grid>
@@ -20,7 +20,7 @@ export const  TweetAnalyzePage = () => (
         </Row>
         <Row style={{marginTop: '20px'}}>
             <Column justifyContent='flex-end'>
-                <SaveAnalyzeButton />
+                <SaveAnalyzeButtons />
             </Column>
         </Row>
     </Grid>
