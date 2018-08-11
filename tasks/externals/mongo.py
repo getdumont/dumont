@@ -9,6 +9,9 @@ db = Client[getenv('MONGO_DB')]
 def query_by_id(doc_id):
     return { '_id': ObjectId(doc_id) }
 
+def get_doc_version(level):
+    return db[kind].find({ 'processing_version': level })
+
 def get_doc(kind, doc_id):
     return db[kind].find_one(query_by_id(doc_id))
 

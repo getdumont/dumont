@@ -2,3 +2,4 @@ boto3
 pymongo
 spacy
 google-cloud-language
+click
