@@ -5,10 +5,11 @@ from externals.mongo import update_doc, get_doc_version
 
 @click.command()
 @click.argument('entity')
-@click.option('--level', default=0, help='Number of greetings.')
-@click.option('--times', default=1, help='Number of greetings.')
-def main(entity, level, times):
-    update_data(entity, level, times, 0)
+@click.option('--level', default=0, help='Level inicial do processamento')
+@click.option('--times', default=1, help='Quantidade de leveis que serão aplicados')
+@click.option('--jump', default=0, help='Quantidade de "skips" dados, esse numero sera mutiplicado por 200')
+def main(entity, level, times, jump):
+    update_data(entity, level, times, jump)
 
 def update_data(entity, level, times, runtimes):
     docs = get_doc_version(entity, level, time=runtimes)

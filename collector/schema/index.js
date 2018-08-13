@@ -10,6 +10,7 @@ const mongoUser = process.env.MONGO_USER && process.env.MONGO_PASS ?
 
 const dbURI = `mongodb${mongoPrefix}://${mongoUser}${process.env.MONGO_URI}${mongoPort}/${process.env.MONGO_DB}`;
 
+console.log(dbURI);
 let connectionRetries = 0;
 
 const connectOnDb = () => {

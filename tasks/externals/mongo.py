@@ -1,9 +1,26 @@
 from os import getenv
-import click
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 
-Client = MongoClient(getenv('MONGO_URI'), 27017)
+mongo_prefix = '+srv' if getenv('MONGO_SRV') else ''
+mongo_port = getenv('MONGO_PORT')
+mongo_port = ':{}'.format(mongo_port) if mongo_port else ''
+mongo_user = getenv('MONGO_USER')
+mongo_pass = getenv('MONGO_PASS')
+mongo_auth = ''
+
+if mongo_user and mongo_pass:
+    mongo_auth = '{}:{}@'.format(mongo_user, mongo_pass)
+
+db_uri = 'mongodb{}://{}{}{}'.format(
+    mongo_prefix,
+    mongo_auth,
+    getenv('MONGO_URI'),
+    mongo_port
+)
+
+print(db_uri)
+Client = MongoClient(db_uri)
 db = Client[getenv('MONGO_DB')]
 
 def query_by_id(doc_id):
