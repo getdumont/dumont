@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Row, Column, Dropdown, Input, Card, Button } from '@opensanca/burro-react';
+import { Grid, Row, Column, Dropdown, RadioBox, Card, Button } from '@opensanca/burro-react';
 import { removeAnswer, addAnswer, updateAnswer } from 'domains/answers/actions';
 import { connect } from 'react-redux';
 import { List } from 'immutable';
@@ -11,18 +11,18 @@ const AnswerForm = ({
     removeAnswer
 }) => (
     <Row style={{marginBottom: '20px'}}>
-        <Column md={5}>
-            {/* <Dropdown placeholder='Selecione uma Pergunta' options={questions}
-                selected={answer.question} onClick={(option) => console.log(option)}/> */}
-            <Input value={answer.question} id='valueok2'
-                onChange={(e) => updateAnswer('label', e.target.value)}/>
+        <Column md={6}>
+            <Dropdown placeholder='Selecione uma Pergunta' options={questions}
+                selected={answer.label} onClick={(option) => updateAnswer('label', option)}/>
         </Column>
-        <Column md={5}>
-            <Input value={answer.impact} id='valueok'
-                onChange={(e) => updateAnswer('impact', parseInt(e.target.value))}/>
+        <Column md={4}>
+            <RadioBox selected={answer.impact} value='1' label='1' onChange={(e) => updateAnswer('impact', e.target.value)} />
+            <RadioBox selected={answer.impact} value='2' label='2' onChange={(e) => updateAnswer('impact', e.target.value)} />
+            <RadioBox selected={answer.impact} value='3' label='3' onChange={(e) => updateAnswer('impact', e.target.value)} />
+            <RadioBox selected={answer.impact} value='4' label='4' onChange={(e) => updateAnswer('impact', e.target.value)} />
         </Column>
         <Column md={2}>
-            <Button block kind='danger' onClick={removeAnswer}>Remover</Button>
+            <Button block kind='danger' onClick={removeAnswer}>X</Button>
         </Column>
     </Row>
 );

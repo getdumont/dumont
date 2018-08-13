@@ -52,7 +52,6 @@ const AuthMiddleware = ({ context }) => ({
         return next().then((response) => {
             return response.data();
         }).catch(({ responseStatus }) => {
-            console.log('responseStatus', responseStatus)
             if (responseStatus == 402) {
                 redirectToLogin();
             }

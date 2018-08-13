@@ -11,7 +11,6 @@ import {
     DESTROY_SESSION_FETCH,
 } from 'domains/specialists/constants';
 
-console.log(CLEAR_WORD);
 const api = apiMiddleware((data) => {
     return data;
 });
