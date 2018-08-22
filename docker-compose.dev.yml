@@ -12,6 +12,8 @@ services:
   specialist_app:
     build: ./specialist-app
     env_file: ./dev.env
+    links:
+      - specialist_api
     ports:
       - 3000:3000
   tasks:

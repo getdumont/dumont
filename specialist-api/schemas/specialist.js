@@ -21,9 +21,6 @@ const SpecialistSchema = new Schema({
     professional_cred: {
         type: String,
     },
-    tweets: [{
-        type: mongoose.SchemaTypes.ObjectId,
-    }],
     analyzing: {
         index: { type: Number },
         list_id: { type: mongoose.SchemaTypes.ObjectId }

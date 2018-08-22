@@ -8,11 +8,13 @@ services:
   specialist_app:
     build: ./specialist-app
     env_file: ./prod.env
+    links:
+      - specialist_api
     ports:
       - 3000:3000
   tasks:
-    build: ./tasks
-    # command: python update_data.py tweets --times 1
+    image: dumont_tasks
+    command: python update_data.py tweets --times 1
     env_file: ./prod.env
   specialist_api:
     build: ./specialist-api

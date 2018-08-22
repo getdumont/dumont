@@ -9,6 +9,10 @@ const sqs = new AWS.SQS({
 });
 
 exports.sendTweetToSQS = (kind) => (id) => new Promise((resolve, reject) => {
+    if (process.env.AWS_SQS_URL && process.env.AWS_SQS_URL !== '') {
+        return resolve('kind');
+    }
+
     const params = {
         DelaySeconds: 10,
         MessageAttributes: {

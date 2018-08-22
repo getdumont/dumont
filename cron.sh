@@ -12,6 +12,4 @@ exec_collector() {
     exec_collector
 }
 
-echo "Start in 1 hour"
-sleep 4000
 exec_collector
