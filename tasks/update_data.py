@@ -6,12 +6,13 @@ from externals.mongo import update_doc, get_doc_version
 @click.command()
 @click.argument('entity')
 @click.option('--level', default=0, help='Level inicial do processamento')
-@click.option('--times', default=1, help='Quantidade de leveis que serão aplicados')
+@click.option('--skiplvl', default=[], help='Level inicial do processamento')
+@click.option('--times', default=0, help='Quantidade de leveis que serão aplicados')
 @click.option('--jump', default=0, help='Quantidade de "skips" dados, esse numero sera mutiplicado por 200')
-def main(entity, level, times, jump):
-    update_data(entity, level, times, jump)
+def main(entity, level, skiplvl, times, jump):
+    update_data(entity, level, skiplvl, times, jump)
 
-def update_data(entity, level, times, runtimes):
+def update_data(entity, level, skiplvl, times, runtimes):
     docs = get_doc_version(entity, level, time=runtimes)
 
     if docs.count() is 0 and times is not 0:
@@ -24,8 +25,12 @@ def update_data(entity, level, times, runtimes):
         p = Processor(
             entity=entity,
             data=doc,
-            level=level
+            level=level,
+            skiplvl=skiplvl
         )
+
+        if times == 0:
+            times = p.doc_last_version
 
         for _ in range(level, level + times):
             mod = p.next()

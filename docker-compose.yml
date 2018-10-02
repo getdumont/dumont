@@ -13,9 +13,11 @@ services:
     ports:
       - 3000:3000
   tasks:
-    image: dumont_tasks
-    command: python update_data.py tweets --times 1
+    build: ./tasks
+    command: python update_data.py tweets --level 0 --skiplvl 1 --times 2
     env_file: ./prod.env
+    volumes:
+      - ./tasks:/tasks
   specialist_api:
     build: ./specialist-api
     env_file: ./prod.env
