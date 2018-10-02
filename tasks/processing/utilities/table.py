@@ -1,11 +1,11 @@
 import re
 
-def Word(pattern, value):
-    def __init__(self, pattern, value):
+class Word():
+    def __init__(self, pattern, value, *args, **kargs):
         self.pattern = pattern
         self.value = value
 
-    def replace(self, text):
+    def replace_in_text(self, text):
         return re.sub(self.pattern, self.value, text)
 
 word_table = [
@@ -24,3 +24,5 @@ word_table = [
     Word(r'(^| )vdd($| )', 'verdade'),
     Word(r'(^| )rt($| )', 'compartilhar'),
 ]
+
+lol_word = Word(r'(k{2,}|(k\s)+)', '')

@@ -1,5 +1,5 @@
 import re
-from .table import word_table
+from .table import word_table, lol_word
 
 def remove_stopwords(tokens):
     return [t for t in tokens if not t.is_stop]
@@ -22,12 +22,14 @@ def join_tokens(tokens):
     return ' '.join([t.text for t in tokens])
 
 def remove_lol(text):
-    return re.replace(r'(k{2,}|(k\s)+)', '', text)
+    return lol_word.replace_in_text(text)
 
 def normalize_words(text):
+    print("normalize {}".format(text))
+    print(word_table)
     text = remove_lol(text)
 
     for word in word_table:
-        text = re.sub(word.pattern, word.value, text)
+        text = word.replace_in_text(text)
 
     return text
