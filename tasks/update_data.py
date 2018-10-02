@@ -37,7 +37,7 @@ def update_data(entity, level, skiplvl, times, runtimes):
             update_doc(entity, doc["_id"], mod)
             click.echo('End: <{}> {}'.format(entity, doc['_id']))
 
-    return update_data(entity, level, times, runtimes + 1)
+    return update_data(entity, level, skiplvl, times, runtimes + 1)
 
 if __name__ == '__main__':
     main()
