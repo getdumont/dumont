@@ -12,6 +12,8 @@ const dbURI = `mongodb${mongoPrefix}://${mongoUser}${process.env.MONGO_URI}${mon
 
 let connectionRetries = 0;
 
+mongoose.Promise = Promise;
+
 const connectOnDb = () => {
   mongoose.connect(dbURI, { useNewUrlParser: true });
 }

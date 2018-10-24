@@ -4,7 +4,11 @@ const { handleRes, auth } = require('../utils.js')
 const { Answer } = require('../schemas');
 
 answer.get('/questions', auth, (req, res) => {
-    handleRes(res, Promise.resolve(require('../questions.json')));
+    const questions = require('../questions.json').questions.map((question) => {
+        return question.value;
+    });
+
+    handleRes(res, Promise.resolve(questions));
 });
 
 answer.post('/', auth, (req, res) => {

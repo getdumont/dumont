@@ -4,9 +4,8 @@ const Schema = mongoose.Schema;
 
 const AnswerSchema = new Schema({
     question: [{
-        label: {
-            type: String,
-            enum: asks,
+        question_index: {
+            type: Number,
             required: true,
         },
         impact: {

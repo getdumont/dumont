@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const Promise = require('bluebird');
 const redis = require('redis');
+const crypto = require('crypto');
 const { Specialist } = require('./schemas');
 
 const client = redis.createClient({
@@ -11,6 +12,10 @@ const client = redis.createClient({
 const generateToken = (specialist) => jwt.sign({
     data: { name: specialist.name }
 }, process.env.SPECIALIST_API_TOKEN_SECRET);
+
+exports.createPasswordHash = (value) => {
+    return crypto.createHash('md5').update(value).digest("hex");
+}
 
 exports.session = {
     create: (specialist) => {
@@ -47,6 +52,7 @@ exports.handleRes = (res, promise) => {
     promise.then((body) => {
         res.status(200).json(body);
     }).catch((error) => {
+        console.log(error);
         res.status(500).json({ error })
     });
 }

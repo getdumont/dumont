@@ -1,4 +1,71 @@
-[
-    "test",
-    "test2"
-]
+{
+    "constructos": [
+        "Estresse",
+        "Ansiedade",
+        "Depressão"
+    ],
+    "questions": [{
+        "value": "Tive dificuldade de me acalmar",
+        "contructo": 0
+    },{
+        "value": "Minha boca ficou seca",
+        "contructo": 1
+    },{
+        "value": "Não tive nenhum sentimento positivo",
+        "contructo": 2
+    },{
+        "value": "Em alguns momentos tive dificuldade de respirar (chiado e falta de ar sem esforço físico)",
+        "contructo": 1
+    },{
+        "value": "Não consegui ter iniciativa para fazer as coisas",
+        "contructo": 2
+    },{
+        "value": "Exagerei intencionalmente ao reagir a situações",
+        "contructo": 0
+    },{
+        "value": "Tive tremedeira (por exemplo, nas mãos)",
+        "contructo": 1
+    },{
+        "value": "Senti que estava sempre nervoso(a)",
+        "contructo": 0
+    },{
+        "value": "Me preocupei com situações em que poderia entrar em pânico e parecer ridículo(a)",
+        "contructo": 1
+    },{
+        "value": "Senti que não tinha vontade de nada",
+        "contructo": 2
+    },{
+        "value": "Me senti inquieto(a)",
+        "contructo": 0
+    },{
+        "value": "Tive dificuldade de relaxar",
+        "contructo": 0
+    },{
+        "value": "Me senti deprimido e sem motivação",
+        "contructo": 2
+    },{
+        "value": "Eu não conseguia tolerar as coisas que me impediam de continuar a fazer o que estava realizando",
+        "contructo": 0
+    },{
+        "value": "Eu senti que ia entrar em pânico",
+        "contructo": 1
+    },{
+        "value": "Nada me deixou entusiasmado",
+        "contructo": 2
+    },{
+        "value": "Eu senti que era uma pessoa sem valor",
+        "contructo": 2
+    },{
+        "value": "Eu senti que estava sendo muito sensível/emotivo",
+        "contructo": 0
+    },{
+        "value": "Eu percebi uma mudança nos meus batimentos cardíacos embora não estivesse praticando exercício rigoroso (ex. batimento cardíaco acelerado ou irregular)",
+        "contructo": 1
+    },{
+        "value": "Eu senti medo sem motivo",
+        "contructo": 1
+    },{
+        "value": "Senti que a vida não tinha sentido",
+        "contructo": 2
+    }]
+}

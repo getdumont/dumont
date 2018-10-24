@@ -1,11 +1,6 @@
 const specialist = require('express').Router();
-const crypto = require('crypto');
-const { handleRes, session, auth } = require('../utils.js')
+const { handleRes, session, auth, createPasswordHash } = require('../utils.js')
 const { Specialist } = require('../schemas');
-
-const md5 = (pass) => {
-    return crypto.createHash('md5').update(pass).digest("hex");
-}
 
 specialist.post('/session', (req, res) => {
     const notAllowed = () => {
@@ -14,7 +9,7 @@ specialist.post('/session', (req, res) => {
 
     Specialist.findOne({
         email: req.body.email,
-        password: md5(req.body.password),
+        password: createPasswordHash(req.body.password),
     }).then((user) => {
         if (!user) {
             return notAllowed();
