@@ -7,19 +7,26 @@ import { List } from 'immutable';
 const AnswerForm = ({
     questions,
     answer,
+    index,
     updateAnswer,
     removeAnswer
 }) => (
     <Row style={{marginBottom: '20px'}}>
         <Column md={6}>
             <Dropdown placeholder='Selecione uma Pergunta' options={questions}
-                selected={answer.label} onClick={(option) => updateAnswer('label', option)}/>
+                selected={answer.id} onClick={(option) => updateAnswer('id', option)}/>
         </Column>
         <Column md={4}>
-            <RadioBox selected={answer.impact} value='1' label='1' onChange={(e) => updateAnswer('impact', e.target.value)} />
-            <RadioBox selected={answer.impact} value='2' label='2' onChange={(e) => updateAnswer('impact', e.target.value)} />
-            <RadioBox selected={answer.impact} value='3' label='3' onChange={(e) => updateAnswer('impact', e.target.value)} />
-            <RadioBox selected={answer.impact} value='4' label='4' onChange={(e) => updateAnswer('impact', e.target.value)} />
+            {
+                ["1", "2", "3", "4"].map((val) => {
+                    const key = `radio-${index}-${val}`;
+                    return (
+                        <RadioBox selected={answer.impact}
+                            key={key} id={key} value={val} label={val}
+                            onChange={(e) => updateAnswer('impact', e.target.value)} />
+                    )
+                })
+            }
         </Column>
         <Column md={2}>
             <Button block kind='danger' onClick={removeAnswer}>X</Button>
@@ -28,7 +35,7 @@ const AnswerForm = ({
 );
 
 const mapStateToProps = ({ answer }) => ({
-    questions: (answer.get('questions') || new List()).toJS(),
+    questions: answer.get('questions') || new List(),
     answers: answer.get('answers') || new List(),
 });
 
@@ -54,9 +61,9 @@ export const AnswerContainerComponent = ({
         <Grid>
             {
                 answers.map((answer, index) => (
-                    <AnswerForm answer={answer} questions={questions} key={index}
+                    <AnswerForm answer={answer} questions={questions.toJS()} key={index}
                         updateAnswer={(key, value) => updateAnswer(index, key, value)}
-                        removeAnswer={() => removeAnswer(index)} />
+                        removeAnswer={() => removeAnswer(index)} index={index} />
                 ))
             }
             <Row>

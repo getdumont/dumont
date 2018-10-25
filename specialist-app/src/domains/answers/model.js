@@ -1,6 +1,6 @@
 import { Record } from 'immutable';
 
 export default new Record({
-    label: '',
+    id: 0,
     impact: '1',
 });

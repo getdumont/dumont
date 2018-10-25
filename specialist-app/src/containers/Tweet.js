@@ -7,6 +7,7 @@ import { List } from 'immutable';
 
 const mapStateToProps = ({ list, word }) => ({
     text: (list.get('detail') || {}).text,
+    id: (list.get('detail') || {})._id,
     words: word.get('list') || new List(),
 });
 
@@ -64,9 +65,12 @@ export class TweetContainerComponent extends Component {
 
     render() {
         return (
-            <Card block>
-                {this.renderWords()}
-            </Card>
+            <div>
+                <div>{this.props.id}</div>
+                <Card block>
+                    {this.renderWords()}
+                </Card>
+            </div>
         );
     }
 }

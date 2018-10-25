@@ -10,8 +10,8 @@ import {
 } from './constants';
 
 const setQuestion = (questions) => (state) => {
-    const list = new List(questions.map((q) => ({
-        text: q, value: q
+    const list = new List(questions.map((question, index) => ({
+        text: question, value: index
     })));
 
     return setIn('questions', list)(state)

@@ -29,10 +29,12 @@ export const addAnswer = () => ({
     type: ADD_ANSWER,
 });
 
-export const updateAnswer = (index, key, value) => ({
-    type: UPDATE_ANSWER,
-    payload: { index, key, value },
-})
+export const updateAnswer = (index, key, value) => {
+    return {
+        type: UPDATE_ANSWER,
+        payload: { index, key, value },
+    }
+}
 
 export const removeAnswer = (index) => ({
     type: REMOVE_ANSWER,
