@@ -12,11 +12,11 @@ const AnswerForm = ({
     removeAnswer
 }) => (
     <Row style={{marginBottom: '20px'}}>
-        <Column md={6}>
+        <Column md={8}>
             <Dropdown placeholder='Selecione uma Pergunta' options={questions}
                 selected={answer.id} onClick={(option) => updateAnswer('id', option)}/>
         </Column>
-        <Column md={4}>
+        <Column md={3}>
             {
                 ["1", "2", "3", "4"].map((val) => {
                     const key = `radio-${index}-${val}`;
@@ -28,7 +28,7 @@ const AnswerForm = ({
                 })
             }
         </Column>
-        <Column md={2}>
+        <Column md={1}>
             <Button block kind='danger' onClick={removeAnswer}>X</Button>
         </Column>
     </Row>

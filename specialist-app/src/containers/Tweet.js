@@ -28,47 +28,14 @@ export class TweetContainerComponent extends Component {
         }
     }
 
-    removePoints(text) {
-        return text.replace(/!|\.|\:|,|;/g, '');
-    }
-
-    renderWords() {
-        if (!this.props.text) {
-            return null;
-        }
-
-        return this.props.text.split(" ").map((text, index) => {
-            const word = this.removePoints(text);
-            const itsOnList = this.props.words.contains(word);
-
-            const style = itsOnList ? ({
-                opacity: '0.5',
-                background: '#f1f1f1',
-                marginRight: '6px',
-                cursor: 'pointer'
-            }) : ({
-                marginRight: '6px',
-                cursor: 'pointer'
-            });
-
-            const onClick = itsOnList ?
-                this.props.removeWord : this.props.addWord;
-
-            return (
-                <span key={`word-${index}`} style={style}
-                    onClick={() => onClick(word)}>
-                    {text}
-                </span>
-            );
-        });
-    }
-
     render() {
         return (
-            <div>
-                <div>{this.props.id}</div>
+            <div style={{width: '100%'}}>
                 <Card block>
-                    {this.renderWords()}
+                    { this.props.id }
+                </Card>
+                <Card block>
+                    {this.props.text}
                 </Card>
             </div>
         );

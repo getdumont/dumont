@@ -11,10 +11,7 @@ export const  TweetAnalyzePage = () => (
             </Column>
         </Row>
         <Row style={{marginTop: '20px'}}>
-            <Column md={4}>
-                <WordContainer />
-            </Column>
-            <Column md={8}>
+            <Column md={12}>
                 <AnswerContainer />
             </Column>
         </Row>
