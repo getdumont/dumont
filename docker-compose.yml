@@ -2,24 +2,46 @@ version: '3'
 services:
   collector:
     build: ./collector
-    env_file: ./prod.env
+    env_file: ./config.env
+    depends_on:
+      - mongo
+    links:
+      - mongo
     ports:
       - 8080:8080
   specialist_app:
     build: ./specialist-app
-    env_file: ./prod.env
+    env_file: ./config.env
     links:
       - specialist_api
     ports:
       - 3000:3000
   tasks:
     build: ./tasks
-    command: python update_data.py tweets --level 0 --skiplvl 1 --times 2
-    env_file: ./prod.env
+    command: python main.py tweets --level 0 --skiplvl 1 --times 2
+    links:
+      - mongo
+    env_file: ./config.env
     volumes:
       - ./tasks:/tasks
   specialist_api:
     build: ./specialist-api
-    env_file: ./prod.env
+    env_file: ./config.env
     ports:
       - 8081:8081
+    links:
+      - mongo
+      - redis
+  redis:
+    image: redis:alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - 6379:6379
+    volumes:
+      - ./redis_data:/data
+  mongo:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - ./data:/data/db

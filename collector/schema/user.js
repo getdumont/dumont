@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
 const emojinator = require('emojinator');
 const Schema = mongoose.Schema;
-const { sendTweetToSQS } = require('../aws');
 
-const sendMessage = sendTweetToSQS('users');
 const baseString = {
     type: String,
     required: true,
@@ -53,21 +51,11 @@ const UserSchema = new Schema({
 });
 
 UserSchema.pre('save', function (next) {
-    if (this.description !== '') {
+    if (this.description !== '' && !this.description_object) {
         this.description_object = emojinator.fullObject(this.description);
     }
 
     next();
-});
-
-UserSchema.post('save', function (doc, next) {
-    if (this.description_object) {
-        return next();
-    }
-
-    sendMessage(doc._id)
-        .then(() => next())
-        .catch(next);
 });
 
 module.exports = mongoose.model('user', UserSchema);

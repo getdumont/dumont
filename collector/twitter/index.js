@@ -1,7 +1,7 @@
 
 const Promise = require('bluebird');
 const twitter = require('./client');
-const { User, Tweet, List } = require('../schema');
+const { User, Tweet } = require('../schema');
 
 const LIMIT = process.env.COLLECTOR_LIMIT;
 const WORDS = [
@@ -25,22 +25,6 @@ let totalTweets = 0;
 let tasks = 0;
 let tasksDone = 0;
 
-const LIST_LIMIT = 200;
-const createLists = () => {
-    return Tweet.countDocuments().then((count) => {
-        let tweetDivision = new Array(Math.ceil(count/LIST_LIMIT))
-
-        return Promise.map(tweetDivision.map((_, index) => {
-            return index;
-        }), (_, index) => {
-            return Tweet.find().skip(index * LIST_LIMIT).limit(LIST_LIMIT).then((tweets) => {
-                const newList = new List({ tweets });
-                return newList.save();
-            });
-        }, { concurrency: 5 });
-    });
-};
-
 // Process data after stream ends
 const processData = ({ tweetsPromise, userPromise }) => {
     return Promise.all([
@@ -57,8 +41,6 @@ const processData = ({ tweetsPromise, userPromise }) => {
                 return tweet.save()
             }, { concurrency: 10 });
         });
-    }).then(() => {
-        return createLists();
     });
 };
 

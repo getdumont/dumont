@@ -8,4 +8,4 @@ RUN apk add make automake gcc g++ subversion python3-dev \
     && pip install -r requirements.txt \
     && python -m spacy download pt_core_news_sm
 
-CMD ["python", "main.py"]
+CMD ["python", "main.py", "tweets"]

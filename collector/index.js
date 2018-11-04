@@ -1,25 +1,25 @@
-const http = require('http');
 const twitterCollector = require('./twitter');
+const ms = require('ms');
 
-http.createServer(function (req, res) {
-    if (req.headers['token'] !== process.env.COLLECTOR_REQUEST_TOKEN) {
-        res.writeHead(402, { 'Content-Type': 'application/json' });
-        res.write(JSON.stringify({ error: 'Not Authorized' }, null, 4));
-        return res.end();
-    }
+let repetitionTimes = 0;
+let timeout = null;
 
-    twitterCollector().then((data) => {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.write(JSON.stringify(data, null, 4));
-        return res.end();
-    }).catch((error) => {
-        res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.write(JSON.stringify({ error }, null, 4));
-        return res.end();
-    });
-}).listen({
-    port: 8080,
-    host: '0.0.0.0'
-}, () => {
-    console.log('Server up on http://0.0.0.0:8080/')
-});
+const collectTweets = () => {
+    setTimeout(() => {
+        twitterCollector().then((data) => {
+            console.log(JSON.stringify(data, null, 4));
+        }).catch((error) => {
+            console.log(error);
+        }).then(() => {
+            if (process.env.REPETITION_TIMES > repetitionTimes) {
+                clearInterval(timeout);
+                process.end(0);
+            } else {
+                repetitionTimes += 1;
+                collectTweets();
+            }
+        })
+    }, ms(process.env.REPETITION_INTERVAL));
+}
+
+timeout = collectTweets();
