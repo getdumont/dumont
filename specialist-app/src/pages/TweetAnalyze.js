@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Grid, Row, Column } from '@opensanca/burro-react';
-import { TweetContainer, WordContainer, AnswerContainer, SaveAnalyzeButtons } from 'containers';
+import { TweetContainer, AnswerContainer, SaveAnalyzeButtons } from 'containers';
 
 export const  TweetAnalyzePage = () => (
     <Grid>

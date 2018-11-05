@@ -5,9 +5,8 @@ import { connect } from 'react-redux';
 import { List } from 'immutable';
 
 
-const mapStateToProps = ({ answer, word, list }) => ({
+const mapStateToProps = ({ answer, list }) => ({
     answers: answer.get('answers') || new List(),
-    words: word.get('list') || new List(),
     tweetId: (list.get('detail') || {})._id
 });
 
@@ -15,10 +14,10 @@ const mapDispatchToProps = (dispatch) => ({
     onClick: (...props) => dispatch(finishTweetAnalyze(...props)),
 });
 
-export const SaveAnalyzeButtonsComponent = ({ onClick, tweetId, answers, words }) => (
+export const SaveAnalyzeButtonsComponent = ({ onClick, tweetId, answers }) => (
     <div>
         <Button onClick={onClick} kind='danger'>Dado sem Análise</Button>
-        <Button onClick={() => onClick(tweetId, answers, words)}>Enviar Analise</Button>
+        <Button onClick={() => onClick(tweetId, answers)}>Enviar Analise</Button>
     </div>
 );
 

@@ -4,7 +4,6 @@ import EncodeJson from 'mappersmith/middleware/encode-json'
 import Specialist from './specialist';
 import List from './list';
 import Answer from './answer';
-import Word from './word';
 
 const TOKEN_KEY = 'dumont-especialista-token';
 const ALLOWED_WITHOUT_TOKEN = Object.freeze([
@@ -62,5 +61,5 @@ const AuthMiddleware = ({ context }) => ({
 export default forge({
     host: 'http://127.0.0.1:8081/',
     middleware: [ EncodeJson, AuthMiddleware ],
-    resources: { Specialist, List, Answer, Word }
+    resources: { Specialist, List, Answer }
 });

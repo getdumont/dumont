@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
-import { addWord, removeWord } from 'domains/words/actions';
 import { getTweet } from 'domains/lists/actions';
 import { Card } from '@opensanca/burro-react';
 import { connect } from 'react-redux';
-import { List } from 'immutable';
 
-const mapStateToProps = ({ list, word }) => ({
+const mapStateToProps = ({ list }) => ({
     text: (list.get('detail') || {}).text,
     id: (list.get('detail') || {})._id,
-    words: word.get('list') || new List(),
 });
 
 const mapDispatchToProps = (dispatch) => ({
     getTweet: () => dispatch(getTweet()),
-    addWord: (text) => dispatch(addWord(text)),
-    removeWord: (text) => dispatch(removeWord(text)),
 })
 
 export class TweetContainerComponent extends Component {
