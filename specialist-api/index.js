@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const App = express();
 
 const {
-    WordController,
     SpecialistController,
     AnswerController,
     ListController
@@ -13,7 +12,6 @@ const {
 App.use(cors());
 App.use(bodyParser.json());
 App.use('/answers', AnswerController);
-App.use('/words', WordController);
 App.use('/specialists', SpecialistController);
 App.use('/lists', ListController);
 

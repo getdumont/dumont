@@ -49,5 +49,4 @@ process.on('SIGINT', function() {
 connectOnDb();
 exports.Specialist = require('./specialist');
 exports.Answer = require('./answer');
-exports.Word = require('./word');
 exports.List = require('./list');
