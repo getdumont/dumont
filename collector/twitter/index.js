@@ -38,7 +38,16 @@ const processData = ({ tweetsPromise, userPromise }) => {
                 totalTweets = totalTweets + 1;
                 const tweet = new Tweet(tweetData);
 
-                return tweet.save()
+                return tweet.save().then(() => {
+                    if (tweetData.truncated) {
+                        return twitter.tweets.byId(tweet.id_str).then(({ full_text }) => {
+                            tweet.text = full_text;
+                            return tweet.save()
+                        }).catch(() => {
+                            console.log('Failed For:', tweet.id_str)
+                        })
+                    }
+                })
             }, { concurrency: 10 });
         });
     });
