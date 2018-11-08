@@ -20,7 +20,7 @@ export const finishTweetAnalyze = (to_tweet, question) => ({
             api.Answer.saveAll({ payload: { to_tweet, question: formatQuestions(question) }}) :
             Promise.resolve();
 
-        return saveQuestion().then(() => {
+        return saveQuestion.then(() => {
             return api.List.nextIndex();
         });
     }
