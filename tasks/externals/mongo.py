@@ -19,7 +19,6 @@ db_uri = 'mongodb{}://{}{}{}'.format(
     mongo_port
 )
 
-print(db_uri)
 Client = MongoClient(db_uri)
 db = Client[getenv('MONGO_DB')]
 

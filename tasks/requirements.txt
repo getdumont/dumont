@@ -2,4 +2,5 @@ pymongo
 spacy
 google-cloud-language
 click
+selenium
 dnspython
