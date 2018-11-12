@@ -6,3 +6,4 @@ package-lock.json
 /redis_data
 .vscode
 __pycache__/
+ghostdriver.log
