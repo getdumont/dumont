@@ -20,6 +20,9 @@ const TweetSchema = new Schema({
         type: String,
         required: true
     },
+    clean_text: {
+        type: String,
+    },
     text_object: {
         type: Object,
         default: {}

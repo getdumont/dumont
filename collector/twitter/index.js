@@ -68,7 +68,7 @@ module.exports = () => new Promise((resolve, reject) => {
 
         processData({
             tweetsPromise: twitter.tweets.byUser(user),
-            userPromise: twitter.getUser(user)
+            userPromise: twitter.users.byObj(user)
         }).then((tweets) => {
             tasksDone = tasksDone + 1;
             tasks = tasks - 1;

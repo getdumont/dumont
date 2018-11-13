@@ -24,8 +24,11 @@ module.exports = {
         stream: (track) => client.stream('statuses/filter', {
             track, location: BRAZIL_LOCATION, language: BRAZIL_LANG
         }),
-        byUser: (user) => getFromAPI('statuses/user_timeline', {...user, tweet_mode: 'extended', count: 200}),
+        byUser: (user, extra = {}) => getFromAPI('statuses/user_timeline', {...user, ...extra, tweet_mode: 'extended', count: 200}),
         byId: (id) => getFromAPI('statuses/show', { id, tweet_mode: 'extended' })
     },
-    getUser: (user) => getFromAPI('users/show', user),
+    users: {
+        byObj: (user) => getFromAPI('users/show', user),
+        byScreenName: (screen_name) => getFromAPI('users/lookup', { screen_name }),
+    },
 }

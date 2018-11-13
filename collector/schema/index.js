@@ -49,3 +49,4 @@ process.on('SIGINT', function() {
 connectOnDb();
 exports.User = require('./user');
 exports.Tweet = require('./tweet');
+exports.Config = require('./config');
